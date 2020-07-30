@@ -49,11 +49,11 @@ defmodule Waffle.Storage.Google.UrlV2 do
   @doc """
   Returns the remote asset host. The config key is assumed to be `:asset_host`.
   """
-  @spec endpoint(Keyword.t()) :: String.t()
-  def endpoint(opts \\ []) do
+  @spec endpoint(Types.definition(), Keyword.t()) :: String.t()
+  def endpoint(definition, opts \\ []) do
     opts
-    |> Util.option(:asset_host, @endpoint)
-    |> Util.var()
+    |> Util.option(:asset_host, definition.asset_host())
+    |> Util.var() || @endpoint
   end
 
   @impl Waffle.Storage.Google.Url
@@ -72,7 +72,7 @@ defmodule Waffle.Storage.Google.UrlV2 do
     include_bucket? = Keyword.get(options, :include_bucket, true)
 
     %URI{
-      host: endpoint(options),
+      host: endpoint(definition, options),
       path: build_path(definition, path, include_bucket?),
       scheme: "https"
     }
