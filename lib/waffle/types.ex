@@ -4,7 +4,7 @@ defmodule Waffle.Types do
   """
 
   @type definition :: Module.t()
-  @type version :: Atom.t() | String.t()
+  @type version :: atom() | String.t()
   @type file :: %Waffle.File{}
   @type meta :: {file, any}
 end
