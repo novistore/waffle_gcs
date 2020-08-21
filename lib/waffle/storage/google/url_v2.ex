@@ -51,9 +51,7 @@ defmodule Waffle.Storage.Google.UrlV2 do
   """
   @spec endpoint(Types.definition(), Keyword.t()) :: String.t()
   def endpoint(definition, opts \\ []) do
-    opts
-    |> Util.option(:asset_host, definition.asset_host())
-    |> Util.var() || @endpoint
+    Keyword.get(opts, :asset_host, definition.asset_host()) || @endpoint
   end
 
   @impl Waffle.Storage.Google.Url

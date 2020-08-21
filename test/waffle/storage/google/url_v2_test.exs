@@ -30,19 +30,23 @@ defmodule Waffle.Storage.Google.UrlV2Test do
 
   describe "endpoint/1" do
     test "returns the option value when provided" do
-      assert "test.com" == UrlV2.endpoint(asset_host: "test.com")
+      assert "test.com" == UrlV2.endpoint(DummyDefinition, asset_host: "test.com")
     end
 
     test "returns the application config as a back-up" do
       Application.put_env(:waffle, :asset_host, "test.com")
-      result = UrlV2.endpoint()
+      result = UrlV2.endpoint(DummyDefinition)
       Application.delete_env(:waffle, :asset_host)
 
       assert "test.com" == result
     end
 
+    test "returns asset_host callback" do
+      assert "custom.com" == UrlV2.endpoint(DummyDefinitionWithAssetHost)
+    end
+
     test "returns default endpoint" do
-      assert "storage.googleapis.com" == UrlV2.endpoint()
+      assert "storage.googleapis.com" == UrlV2.endpoint(DummyDefinition)
     end
   end
 end

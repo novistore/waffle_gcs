@@ -44,7 +44,7 @@ defmodule Waffle.Storage.Google.CloudStorage do
     Objects.storage_objects_delete(
       conn(),
       bucket(definition),
-      path_for(definition, version, meta)
+      path_for(definition, version, meta) |> URI.encode(&URI.char_unreserved?/1)
     )
   end
 
